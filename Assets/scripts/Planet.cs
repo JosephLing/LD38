@@ -131,9 +131,17 @@ public class Planet: Orbit {
         }
             if (col.gameObject.tag == "moon")
             {
-                Debug.Log(col.gameObject.transform.parent.name);
-                Destroy(col.gameObject);
-                takeDamage(col.gameObject.GetComponent<Moon>().getMass());
+                if (transform.parent != null)
+            {
+                if (transform.parent.name != this.name)
+                {
+                    Debug.Log(col.gameObject.transform.parent.name);
+                    Destroy(col.gameObject);
+                    takeDamage(col.gameObject.GetComponent<Moon>().getMass());
+                }
+            }
+                
+               
             }
         
     }

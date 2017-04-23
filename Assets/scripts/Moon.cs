@@ -27,4 +27,20 @@ public class Moon : Orbit {
         setSpeed(50);
         rotate();
 	}
+
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "moon")
+        {
+            if (transform.parent != null && transform.parent != null)
+            {
+                if (transform.parent.name != transform.parent.name)
+                {
+                    Destroy(col.gameObject);
+                    Destroy(this);
+                }
+            }
+        }
+    }
 }

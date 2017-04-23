@@ -124,7 +124,7 @@ public class Pluto : Planet {
         {
             if (transform.childCount > 0)
             {
-                setMass(transform.GetChild(0).gameObject.GetComponent<Moon>().getMass() / 4);
+                setMass(getMass() + transform.GetChild(0).gameObject.GetComponent<Moon>().getMass() / 4);
                 Destroy(transform.GetChild(0).gameObject);
 
             }

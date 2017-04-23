@@ -11,10 +11,16 @@ public class StatsUI : MonoBehaviour {
     private int playerId;
     private bool playerIdSet;
 
-	// Use this for initialization
-	void Start () {
+    public StatsUI()
+    {
         playerIdSet = false;
         planets = new List<Planet>();
+    }
+
+
+	// Use this for initialization
+	void Start () {
+        
 	}
 
     public void addPlanet(Planet planet)
