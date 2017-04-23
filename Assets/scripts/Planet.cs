@@ -123,7 +123,7 @@ public class Planet: Orbit {
             Asteroid temp = col.gameObject.GetComponent<Asteroid>();
 
 
-            if (getMass() - temp.getMass() > 50)
+            if (getMass() - temp.getMass() > 5)
             {
                 createMoon();
             }

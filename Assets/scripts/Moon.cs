@@ -15,7 +15,7 @@ public class Moon : Orbit {
     {
         setSpeed(50);
         setDistance();
-        setMass(30f);
+        setMass(15f);
     }
 
   

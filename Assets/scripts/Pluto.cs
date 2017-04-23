@@ -7,7 +7,7 @@ public class Pluto : Planet {
     public float leftIncrement;
     public float rightIncrement;
 
-    public Pluto() : base( "Pluto", 35)
+    public Pluto() : base( "Pluto", 45)
     {
         nMoons = 3;
     }
