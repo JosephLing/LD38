@@ -44,10 +44,7 @@ public class Orbit : MonoBehaviour
 
     public void setSpeed(float newSpeed)
     {
-        if (newSpeed < 25.0f && newSpeed > -25.0f)
-        {
-            speed = newSpeed;
-        }
+        speed = newSpeed;
     }
 
     public float getSpeed()
@@ -63,13 +60,7 @@ public class Orbit : MonoBehaviour
 
     public void setDistance()
     {
-        if (transform != null)
-        {
-            distance = Mathf.Sqrt((transform.position.x * transform.position.x) + (transform.position.z * transform.position.z));
-        }else
-        {
-            Debug.LogWarning("transform null for " + name);
-        }
+        distance = Mathf.Sqrt((transform.position.x * transform.position.x) + (transform.position.z * transform.position.z));
     }
 
 

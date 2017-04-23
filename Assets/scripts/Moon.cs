@@ -8,14 +8,18 @@ public class Moon : Orbit {
 
     public Moon(): base(Vector3.zero)
     {
+       
+    }
+
+    private void Start()
+    {
         setSpeed(50);
         setDistance();
     }
 
-   
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         setOrbitingAround(transform.parent.gameObject.transform.position);
         setSpeed(50);
         rotate();

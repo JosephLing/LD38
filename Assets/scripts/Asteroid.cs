@@ -16,9 +16,5 @@ public class Asteroid : MonoBehaviour {
     void Update () {
 	}
 
-    private void OnTriggerExit(Collider other)
-    {
-        Debug.Log(other.name);
-
-    }
+    
 }

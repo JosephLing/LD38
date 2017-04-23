@@ -69,13 +69,20 @@ public class Planet: Orbit {
 
    public void createMoon()
     {
+
+
         if (moonPrefabs != null && moonPrefabs.Length != 0)
         {
-            Moon moonCopy = Instantiate<Moon>(moonPrefabs[(int)Random.Range(0, moonPrefabs.Length)]);
-            Vector3 pos = Orbit.randomPointOnCircumferance(Random.Range(0.3f, 1.25f) + transform.lossyScale.z / 2);
-            moonCopy.transform.position = new Vector3(pos.x, Random.Range(transform.position.y, transform.lossyScale.y), pos.z);
-            moonCopy.transform.parent = transform;
-            moons.Add(moonCopy);
+            int index = (int)Random.Range(0, moonPrefabs.Length);
+            if (moonPrefabs[index] != null)
+            {
+                Moon moonCopy = Instantiate<Moon>(moonPrefabs[index]);
+                Vector3 pos = Orbit.randomPointOnCircumferance( Random.Range(0.3f, 1.25f) + transform.lossyScale.z / 2);
+                moonCopy.transform.position = new Vector3(pos.x+transform.position.x, Random.Range(transform.position.y, transform.lossyScale.y), pos.z + transform.position.z);
+                moonCopy.transform.parent = transform;
+                //moons.Add(moonCopy);
+            }
+           
         }else
         {
             Debug.LogWarning("no moonPrefabs set for planet: " + name);

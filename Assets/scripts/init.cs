@@ -29,7 +29,7 @@ public class init : MonoBehaviour {
 
 
     private int tick;
-
+    private float maxDistance;
 
     // Use this for initialization
     void Start()
@@ -105,7 +105,8 @@ public class init : MonoBehaviour {
                 if (planets[i] != null)
                 {
                     Planet planetCopy = Instantiate<Planet>(planets[i]);
-                    Vector3 pos = Orbit.randomPointOnCircumferance((i + 1) * 8.0f);
+                    maxDistance = (i + 1) * 8.0f;
+                    Vector3 pos = Orbit.randomPointOnCircumferance(maxDistance);
                     planetCopy.transform.position = new Vector3(pos.x, (planets[i].transform.lossyScale.y / 2.0f), pos.z);
                     planetCopy.setMoonPrefabs(moonPrefabs);
                     if (i == playerId)
@@ -124,14 +125,23 @@ public class init : MonoBehaviour {
     
     
     //------------------------------------------
-    private void createAsteriod(int distance)
+    private void createAsteriod(float distance)
     {
-        GameObject temp = Instantiate<GameObject>(Asteroid, Orbit.randomPointOnCircumferance(distance), Quaternion.identity);
+        Vector3 pos = Orbit.randomPointOnCircumferance(distance + Random.Range(-distance / 8, distance / 8));
+        GameObject temp = Instantiate<GameObject>(Asteroid,new Vector3(pos.x, 1f, pos.z), Quaternion.identity);
         temp.transform.parent = transform;
     }
 
     private void createAsteroids()
     {
+        if (maxDistance == 0.0f)
+        {
+            maxDistance = 50.0f;
+        }
+        else
+        {
+            maxDistance += 5;
+        }
         for (int i = 0; i < 25; i++)
         {
             createAsteriod(75);
@@ -142,9 +152,10 @@ public class init : MonoBehaviour {
     {
         if (ASTEROIDS_ENABLED)
         {
+            
             for (int i = 0; i < AsteriodCount; i++)
             {
-                createAsteriod(50);
+                createAsteriod(maxDistance);
             }
         }
        
