@@ -2,28 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class GameOpenMenu : MonoBehaviour {
 
 
-    public Button start;
     public string level;
+
+    public Button toHist;
+    public Button play;
+
+    public GameObject hist;
+    public GameObject main;
+
 
 	// Use this for initialization
 	void Start () {
-
-        Button btn = start.GetComponent<Button>();
-        btn.onClick.AddListener(TaskOnClick);
+        play.onClick.AddListener(loadLevel);
+        toHist.onClick.AddListener(loadHist);
     }
 
-    void TaskOnClick()
+
+    void loadHist()
     {
-        Application.LoadLevel(level);
+        main.SetActive(false);
+        hist.SetActive(true);
     }
 
+    void loadLevel()
+    {
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+        SceneManager.LoadScene(level);
+    }
+
 }

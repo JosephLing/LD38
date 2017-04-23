@@ -9,7 +9,7 @@ public class Orbit : MonoBehaviour
 
     private float distance;
     private Vector3 center;
-
+    private float mass;
 
     public Orbit(Vector3 test)
     {
@@ -17,12 +17,6 @@ public class Orbit : MonoBehaviour
         
     }
 
-    //void Start()
-    //{
-    //    setDistance();
-    //    setSpeed();
-        
-    //}
 
 
     public void setOrbitingAround(Vector3 newCenter)
@@ -30,15 +24,11 @@ public class Orbit : MonoBehaviour
         center = newCenter;
     }
 
-    public void checkAlive()
-    {
-        
-
-    }
+    
 
     public void setSpeed()
     {
-        speed = 3;
+        speed = mass * 0.15f;
         //speed = (SolarSystem.getMaxSize() - distance) - transform.lossyScale.x;
     }
 
@@ -75,7 +65,7 @@ public class Orbit : MonoBehaviour
 
     public static Vector3 randomPointOnCircumferance(float distance)
     {
-        float b = Random.Range(-(distance - distance/8), (distance - distance / 8));
+        float b = Random.Range(-(distance), (distance));
         float a = Mathf.Sqrt((distance * distance) - (b * b));
         if (Random.value >= 0.5)
         {
@@ -84,9 +74,41 @@ public class Orbit : MonoBehaviour
         return new Vector3(b, 0.5f, a);
     }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    rotate();
-    //}
+
+    public void takeDamage(float damage)
+    {
+        mass -= damage * 1 / Random.Range(4, 16);
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "asteroid")
+        {
+            Destroy(col.gameObject);
+
+            Asteroid temp = col.gameObject.GetComponent<Asteroid>();
+            takeDamage(temp.getMass());
+
+        }
+    }
+
+
+    public void checkAlive()
+    {
+        if (getMass() <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public float getMass()
+    {
+        return mass;
+    }
+
+    public void setMass(float mass)
+    {
+        this.mass = mass;
+        setSpeed();
+    }
 }

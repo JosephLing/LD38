@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Pluto : Planet {
 
     public float leftIncrement;
     public float rightIncrement;
 
-    public Pluto() : base( "Pluto")
+    public Pluto() : base( "Pluto", 35)
     {
-
+        nMoons = 3;
     }
 
 
@@ -17,6 +17,7 @@ public class Pluto : Planet {
 	void Start () {
         setDistance();
         setSpeed();
+        createMoons();  
     
 	}
 	
@@ -73,11 +74,11 @@ public class Pluto : Planet {
            pos = new Vector3(transform.position.x + (transform.position.x * amount), transform.position.y, transform.position.z + transform.position.z * amount);
         }
 
+        
         if (pos != null)
         {
             float distance = calDistance(pos);
-            Debug.Log("a" + distance + "b " + getDistance());
-            if ( distance > 8.0f && distance < 70.0f)
+            if ( distance > 3.0f && distance < 70.0f)
             {
                 transform.position = pos;
                 setDistance();
@@ -97,9 +98,13 @@ public class Pluto : Planet {
         }else if (up)
         {
             changeDistance(1f);
-        }else if (down)
+            takeDamage(0.5f);
+
+        }
+        else if (down)
         {
             changeDistance(-1f);
+            takeDamage(0.5f);
         }
 
         bool right = getRight();
@@ -114,7 +119,21 @@ public class Pluto : Planet {
             setNewSpeed(getSpeed() - rightIncrement);
         }
 
+
+        if (Input.GetKeyDown("space"))
+        {
+            if (transform.childCount > 0)
+            {
+                setMass(transform.GetChild(0).gameObject.GetComponent<Moon>().getMass() / 4);
+                Destroy(transform.GetChild(0).gameObject);
+
+            }
+        }
+
         
+
+
+        checkAlive();
 
 
 

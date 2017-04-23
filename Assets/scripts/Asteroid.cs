@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour {
 
-    private Rigidbody rb;
+    private float mass;
+
 
 	// Use this for initialization
 	void Start () {
-        rb = GetComponent<Rigidbody>();
-        //rb.angularVelocity = Random.insideUnitSphere * 3.0f;
+        float scaleFactor = Random.Range(1, 5);
+        mass = 5 + 5 * scaleFactor;
+        scaleFactor = 1.0f + scaleFactor / 8;
+        transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+
     }
 
-    // Update is called once per frame
-    void Update () {
-	}
+    public float getMass()
+    {
+        return mass;
+    }
+
 
     
 }

@@ -6,13 +6,18 @@ public class Planet: Orbit {
 
     public static string RANDALPHABET = "abcdefghijklmnopqrstuvwxyz!12345";
 
+    public int nMoons = 0;
+
     private List<Moon> moons;
     private Moon[] moonPrefabs;
-    private int weight;
     private string planetName;
 	
-    public Planet(string newName) : base(Vector3.up)
+    public Planet(string newName, float mass) : base(Vector3.up)
     {
+        if (mass > 0.0f)
+        {
+            setMass(mass);
+        }
         setName(newName);
     }
 
@@ -60,12 +65,23 @@ public class Planet: Orbit {
 
     void Start()
     {
-        
-
+        if (getMass() == 0.0f)
+        {
+            setMass(Random.Range(3, 6) * 15);
+        }
         setDistance();
         setSpeed();
+        createMoons();
     }
 
+
+    public void createMoons()
+    {
+        for (int i = 0; i <= nMoons; i++)
+        {
+            createMoon();
+        }
+    }
 
    public void createMoon()
     {
@@ -93,20 +109,32 @@ public class Planet: Orbit {
 	// Update is called once per frame
 	void Update () {
         rotate();
+        checkAlive();
 	}
+
+
 
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "asteroid")
         {
             Destroy(col.gameObject);
-            if (weight > 5)
+
+            Asteroid temp = col.gameObject.GetComponent<Asteroid>();
+
+
+            if (getMass() - temp.getMass() > 50)
             {
                 createMoon();
-                weight = 0;
             }
-            weight++;
+            takeDamage(temp.getMass());
         }
+            if (col.gameObject.tag == "moon")
+            {
+                Debug.Log(col.gameObject.transform.parent.name);
+                Destroy(col.gameObject);
+                takeDamage(col.gameObject.GetComponent<Moon>().getMass());
+            }
+        
     }
-
 }

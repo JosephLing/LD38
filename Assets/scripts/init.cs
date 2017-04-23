@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class init : MonoBehaviour {
 
     public GameObject star;
@@ -9,14 +9,15 @@ public class init : MonoBehaviour {
 
     public Moon[] moonPrefabs;
 
+    public int playerId;
+    public int mapSize;
+
     public Camera MiniMap;
     public PlayerCamera playerView;
 
-    public int playerId;
-
-    public int mapSize;
-
-
+    public Text stats;
+    public GameObject deathScreen;
+    
 
     public GameObject Asteroid;
     public int AsteriodCount = 500;
@@ -39,6 +40,7 @@ public class init : MonoBehaviour {
         setUpCameras();
 
         createAsteroidsInit();
+
 
 
     }
@@ -111,8 +113,10 @@ public class init : MonoBehaviour {
                     planetCopy.setMoonPrefabs(moonPrefabs);
                     if (i == playerId)
                     {
+                        (stats.GetComponent<StatsUI>()).setPlayerId(i);
                         setUpPlayerCamera(planetCopy);
                     }
+                    (stats.GetComponent<StatsUI>()).addPlanet(planetCopy);
                 }
                 else
                 {
@@ -127,7 +131,7 @@ public class init : MonoBehaviour {
     //------------------------------------------
     private void createAsteriod(float distance)
     {
-        Vector3 pos = Orbit.randomPointOnCircumferance(distance + Random.Range(-distance / 8, distance / 8));
+        Vector3 pos = Orbit.randomPointOnCircumferance(distance + Random.Range(-distance / 3, distance / 3));
         GameObject temp = Instantiate<GameObject>(Asteroid,new Vector3(pos.x, 1f, pos.z), Quaternion.identity);
         temp.transform.parent = transform;
     }
@@ -172,6 +176,7 @@ public class init : MonoBehaviour {
             if (ASTEROIDS_ENABLED)
             {
                 createAsteroids();
+                maxDistance -= 8;
             }
             tick = 0;
         }
@@ -180,6 +185,7 @@ public class init : MonoBehaviour {
             tick++;
         }
 
+       
     }
 
 

@@ -15,7 +15,10 @@ public class Moon : Orbit {
     {
         setSpeed(50);
         setDistance();
+        setMass(30f);
     }
+
+  
 
 
     // Update is called once per frame
